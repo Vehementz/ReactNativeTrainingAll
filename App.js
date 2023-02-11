@@ -39,6 +39,9 @@ export default function App() {
 
 
   return (
+    <>
+    <StatusBar translucent={true}/>
+
     <View style={styles.container}>
 
       <View style={styles.globalContainer}>
@@ -72,6 +75,8 @@ export default function App() {
 
       </View>
     </View>
+    </>
+
   );
 }
 
