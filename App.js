@@ -1,22 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList } from 'react-native';
+import { Button, StyleSheet, View, FlatList } from 'react-native';
+
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
 
-  const [enteredGoalText, setEnteredGoalText] = useState("");
 
   const [courseGoals, setCourseGoals] = useState([]);
 
-  function goalInputHandler(enteredText) {
-    setEnteredGoalText(enteredText);
-  }
-
-  function addGoalHandler() {
+  function addGoalHandler(enteredGoalText) {
     setCourseGoals(currentCourseGoals => [
       ...currentCourseGoals,
       { text: enteredGoalText, key: Math.random().toString() },
     ])
+  }
+
+
+  function deleGoalHandler(id) {
+    setCourseGoals(currentCourseGoals => {
+      return currentCourseGoals.filter((goal) => goal.id !== id);
+    })
   }
 
 
@@ -25,27 +30,26 @@ export default function App() {
 
       <View style={styles.globalContainer}>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Your goals"
-            onChangeText={goalInputHandler}
-          />
-          <Button
-            style={styles.buttonGoald}
-            title="Add Goal"
-            onPress={addGoalHandler}
-          />
-        </View>
+      <GoalInput onAddGoal={addGoalHandler} />
+       
       </View>
       <View style={styles.goalsContainer}>
-        <FlatList data={courseGoals} renderItem={(itemData) => {
+        <FlatList 
+        data={courseGoals} 
+        renderItem={(itemData) => {
 
           return (
-            <View style={styles.goalItem}>
-              <Text style={styles.goalText} >{itemData.item.text}</Text>
-            </View>
+          
+          <GoalItem  
+          text={itemData.item.text}
+          id={itemData.item.id}
+          onDeleteItem={deleGoalHandler}
+          />
           )
+        }}
+
+        keyExtractor={(item, index) => {
+          return item.id;
         }}
           alwaysBounceVertical={false}
         />
@@ -76,27 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: "auto",
   },
-  inputContainer: {
-    backgroundColor: "white",
-    flexDirection: "row",
-    marginBottom: 14,
-    width: "70%",
-    paddingBottom: 7,
-    margin: "auto",
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: 'center',
 
-
-
-  },
-  textInput: {
-    borderWidth: 1,
-    flexDirection: "row",
-    padding: 7,
-    width: "100%",
-    marginRight: 4
-  },
 
 
   buttonGoald: {
@@ -110,14 +94,4 @@ const styles = StyleSheet.create({
     borderRadius: 55
   },
 
-  goalItem: {
-    backgroundColor: "pink",
-    margin: 8,
-    padding: 8,
-    borderRadius: 6,
-    paddingLeft: 15
-
-  }, goalText: {
-    color: "green"
-  }
 });
