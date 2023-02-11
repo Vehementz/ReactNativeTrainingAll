@@ -37,7 +37,7 @@ export default function App() {
 
       <View style={styles.globalContainer}>
       <Button title="Add new Goa" color="red" onPress={startAddGoalHandler}/>
-      { modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />}
+       <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
        
       </View>
       <View style={styles.goalsContainer}>
