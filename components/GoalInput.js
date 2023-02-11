@@ -15,12 +15,15 @@ function GoalInput(props) {
         props.onAddGoal(enteredGoalText);
         setEnteredGoalText("");
     }
+    
 
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.inputContainer}>
                 <Image style={styles.image}
-                    source={require('../assets/tasks.png')} />
+                    source={require('../assets/tasks.png')} 
+                    />
+
 
                 <TextInput
                     style={styles.textInput}
