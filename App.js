@@ -22,6 +22,7 @@ export default function App() {
       ...currentCourseGoals,
       { text: enteredGoalText, key: Math.random().toString() },
     ])
+    endAddGoalHandler(); 
   }
 
 
@@ -32,12 +33,20 @@ export default function App() {
   }
 
 
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
+
+
   return (
     <View style={styles.container}>
 
       <View style={styles.globalContainer}>
       <Button title="Add new Goa" color="red" onPress={startAddGoalHandler}/>
-       <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
+       <GoalInput visible={modalIsVisible} 
+       onAddGoal={addGoalHandler}
+       onCancel={endAddGoalHandler}
+       />
        
       </View>
       <View style={styles.goalsContainer}>
