@@ -7,8 +7,15 @@ import GoalInput from './components/GoalInput';
 
 export default function App() {
 
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
   const [courseGoals, setCourseGoals] = useState([]);
+
+
+  function startAddGoalHandler() {
+    setModalIsVisible(true); 
+  }
+
 
   function addGoalHandler(enteredGoalText) {
     setCourseGoals(currentCourseGoals => [
@@ -29,8 +36,8 @@ export default function App() {
     <View style={styles.container}>
 
       <View style={styles.globalContainer}>
-
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button title="Add new Goa" color="red" onPress={startAddGoalHandler}/>
+      { modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />}
        
       </View>
       <View style={styles.goalsContainer}>
@@ -71,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: "auto",
     borderWidth: 2,
+    width: "100%"
   },
   globalContainer: {
     width: "100%",
